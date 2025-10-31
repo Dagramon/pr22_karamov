@@ -1,0 +1,23 @@
+package com.bignerdranch.android.pr22_karamov
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        var currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+
+        if (currentFragment == null)
+        {
+            val loginFragment = Login()
+
+            supportFragmentManager
+                .beginTransaction()
+                .add(R.id.fragment_container, loginFragment)
+                .commit()
+        }
+    }
+}
