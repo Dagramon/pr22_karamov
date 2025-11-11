@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.LinearLayout
+import androidx.core.graphics.drawable.toDrawable
 import com.google.android.material.snackbar.Snackbar
 
 class Login : Fragment() {
@@ -37,8 +39,11 @@ class Login : Fragment() {
             {
                 if (loginEditText.text.toString() == "ects" && passwordEditText.text.toString() == "ects2025")
                 {
+                    val movies = Movies()
                     parentFragmentManager
                         .beginTransaction()
+                        .replace(R.id.fragment_container, movies)
+                        .commit()
                 }
                 else
                 {
