@@ -8,6 +8,7 @@ import android.view.ViewGroup
 
 class Movies : Fragment() {
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -16,7 +17,9 @@ class Movies : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        return inflater.inflate(R.layout.fragment_movies, container, false)
+        val view = inflater.inflate(R.layout.fragment_movies, container, false)
+
+        return view
     }
 
     companion object {

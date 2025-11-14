@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.graphics.drawable.toDrawable
+import androidx.core.graphics.toColor
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
@@ -23,11 +24,6 @@ class MainActivity : AppCompatActivity() {
         logoutButton = findViewById(R.id.logoutButton)
         bottomBar = findViewById(R.id.bottomNav)
 
-        //bottomBar.background = R.color.gray.toDrawable()
-        cabinetButton.setOnClickListener {}
-        moviesButton.setOnClickListener {}
-        logoutButton.setOnClickListener {}
-
         var currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
 
         if (currentFragment == null)
@@ -36,32 +32,67 @@ class MainActivity : AppCompatActivity() {
 
             supportFragmentManager
                 .beginTransaction()
-                .add(R.id.fragment_container, loginFragment)
+                .replace(R.id.fragment_container, loginFragment)
+                .addToBackStack("Login")
                 .commit()
 
             cabinetButton.setOnClickListener {
-                Toast.makeText(this, currentFragment.toString(), Toast.LENGTH_LONG).show()
-                val cabinetFragment = Cabinet()
-                supportFragmentManager
-                    .beginTransaction()
-                    .add(R.id.fragment_container, cabinetFragment)
-                    .commit()
+                currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+                when (currentFragment)
+                {
+                    is Login ->
+                    {
+                        Toast.makeText(this, "Сначала нужно войти", Toast.LENGTH_SHORT).show()
+                    }
+                    else ->
+                    {
+                        val cabinetFragment = Cabinet()
+                        supportFragmentManager
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, cabinetFragment)
+                            .addToBackStack("Cabinet")
+                            .commit()
+                    }
+                }
             }
 
             moviesButton.setOnClickListener {
-                val moviesFragment = Movies()
-                supportFragmentManager
-                    .beginTransaction()
-                    .add(R.id.fragment_container, moviesFragment)
-                    .commit()
+                currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+                when (currentFragment)
+                {
+                    is Login ->
+                    {
+                        Toast.makeText(this, "Сначала нужно войти", Toast.LENGTH_SHORT).show()
+                    }
+                    else ->
+                        {
+                        val moviesFragment = Movies()
+                        supportFragmentManager
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, moviesFragment)
+                            .addToBackStack("Movies")
+                            .commit()
+                    }
+                }
             }
             logoutButton.setOnClickListener {
-                val loginFragment = Login()
-
-                supportFragmentManager
-                    .beginTransaction()
-                    .add(R.id.fragment_container, loginFragment)
-                    .commit()
+                currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+                when (currentFragment)
+                {
+                    is Login ->
+                    {
+                        Toast.makeText(this, "Сначала нужно войти", Toast.LENGTH_SHORT).show()
+                    }
+                    else ->
+                        {
+                            val loginFragment = Login()
+                            supportFragmentManager
+                                .beginTransaction()
+                                .replace(R.id.fragment_container, loginFragment)
+                                .addToBackStack("Login")
+                                .commit()
+                    }
+                }
             }
         }
     }
